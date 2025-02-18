@@ -1,0 +1,71 @@
+<!-- <template id="translationTemplate"> -->
+<div class="bg-blue auth-container layui-text">
+  <h2 class="layui-font-32 auth-title">{{= d.login}}</h2>
+
+  <form method="POST" class="layui-form" lay-filter="loginForm">
+    <div class="layui-form-item">
+      <label class="layui-form-label">{{= d.username}}</label>
+      <div class="layui-input-block">
+        <input
+          type="text"
+          name="username"
+          required
+          lay-verify="required"
+          lay-reqtext="{{= d.usernameCannotBeEmpty}}"
+          placeholder="{{= d.enterUsername}}"
+          class="layui-input"
+        />
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">{{= d.password}}</label>
+      <div class="layui-input-block">
+        <input
+          type="password"
+          name="password"
+          required
+          lay-affix="eye"
+          lay-reqtext="{{= d.passwordCannotBeEmpty}}"
+          lay-verify="required|loginStrongPassword"
+          placeholder="{{= d.enterPassword}}"
+          class="layui-input"
+        />
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button
+          type="submit"
+          class="layui-btn"
+          lay-submit
+          lay-filter="login"
+          lay-loading
+        >
+          {{= d.login}}
+        </button>
+        <button
+          type="button"
+          class="layui-btn layui-btn-primary"
+          id="faceAuthBtn"
+          lay-filter="faceAuthBtn"
+        >
+          {{= d.loginWithFace}}
+        </button>
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <a href="register.html" class="layui-link">{{= d.dontHaveAccount}}</a>
+      </div>
+    </div>
+  </form>
+
+  <div class="layui-text">
+    <button id="jaBtn">日本語</button>
+    <button id="enBtn">English</button>
+  </div>
+</div>
+<!-- </template> -->

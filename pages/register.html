@@ -4,101 +4,39 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register</title>
-    <link rel="stylesheet" href="../node_modules/layui/dist/css/layui.css" />
+    <!-- LAYUI IMPORTS -->
+    <!-- CSS -->
+    <link rel="stylesheet" href="../layui/css/layui.css" />
+    <!-- JS -->
+    <script type="module" src="../layui/layui.js"></script>
+
+    <!-- FACE API -->
+    <script src="../face-api.js/dist/face-api.min.js"></script>
+
+    <!-- CUSTOM CSS -->
     <link rel="stylesheet" href="../assets/css/main.css" />
-    <script src="../node_modules/layui/dist/layui.js" defer></script>
-    <script src="../node_modules/face-api.js/dist/face-api.js"></script>
-    <script src="../assets/js/modules/auth.js" defer></script>
-    <!-- <script src="assets/js/modules/router.js" defer></script> -->
-    <script src="../assets/js/app.js" defer></script>
+
+    <!-- MODULES -->
+    <!-- NOTE: defer is just the same as putting the script at the bottom of the body,
+     since deferred scripts execute in order after the 
+     DOM (Document Object Model or the HTML structure) is fully loaded -->
+    <script
+      type="module"
+      src="../assets/js/modules/templateManager.js"
+      defer
+    ></script>
+    <script
+      type="module"
+      src="../assets/js/modules/translation.js"
+      defer
+    ></script>
+    <script type="module" src="../assets/js/modules/auth.js" defer></script>
+
+    <!-- APP -->
+    <script type="module" src="../assets/js/app.js" defer></script>
   </head>
+
   <body>
-    <div class="auth-container layui-text">
-      <h2 class="auth-title">Register</h2>
-
-      <form method="POST" class="layui-form" lay-filter="registerForm">
-        <div class="layui-form-item">
-          <label class="layui-form-label">Username</label>
-          <div class="layui-input-block">
-            <input
-              type="text"
-              name="username"
-              required
-              lay-verify="required"
-              placeholder="Enter username"
-              class="layui-input"
-            />
-          </div>
-        </div>
-
-        <div class="layui-form-item">
-          <label class="layui-form-label">Email</label>
-          <div class="layui-input-block">
-            <input
-              type="email"
-              name="email"
-              required
-              lay-verify="required|email"
-              placeholder="Enter email"
-              class="layui-input"
-            />
-          </div>
-        </div>
-
-        <div class="layui-form-item">
-          <label class="layui-form-label">Password</label>
-          <div class="layui-input-block">
-            <input
-              type="password"
-              name="password"
-              required
-              lay-affix="eye"
-              lay-verify="required|registerStrongPassword"
-              placeholder="Enter password"
-              class="layui-input"
-            />
-          </div>
-        </div>
-
-        <div class="layui-form-item">
-          <label class="layui-form-label">Confirm</label>
-          <div class="layui-input-block">
-            <input
-              type="password"
-              name="confirmPassword"
-              required
-              lay-affix="eye"
-              lay-verify="required|confirmPassword"
-              placeholder="Confirm password"
-              class="layui-input"
-            />
-          </div>
-        </div>
-
-        <div class="layui-form-item">
-          <div class="layui-input-block">
-            <button class="layui-btn" lay-submit lay-filter="register">
-              Register
-            </button>
-            <button
-              type="button"
-              class="layui-btn layui-btn-primary"
-              id="faceAuthBtn"
-              lay-filter="faceAuthBtn"
-            >
-              Register Face
-            </button>
-          </div>
-        </div>
-
-        <div class="layui-form-item">
-          <div class="layui-input-block">
-            <a href="login.html" class="layui-link"
-              >Already have an account? Login</a
-            >
-          </div>
-        </div>
-      </form>
-    </div>
+    <main id="root"></main>
   </body>
 </html>

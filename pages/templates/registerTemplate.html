@@ -1,0 +1,93 @@
+<div class="auth-container layui-text">
+  <h2 class="auth-title">{{= d.register}}</h2>
+
+  <form method="POST" class="layui-form" lay-filter="registerForm">
+    <div class="layui-form-item">
+      <label class="layui-form-label">{{= d.username}}</label>
+      <div class="layui-input-block">
+        <input
+          type="text"
+          name="username"
+          required
+          lay-verify="required"
+          lay-reqtext="{{= d.usernameCannotBeEmpty}}"
+          placeholder="{{= d.enterUsername}}"
+          class="layui-input"
+        />
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">{{= d.email}}</label>
+      <div class="layui-input-block">
+        <input
+          type="email"
+          name="email"
+          required
+          lay-verify="required|email"
+          lay-reqtext="{{= d.emailCannotBeEmpty}}"
+          placeholder="{{= d.enterEmail}}"
+          class="layui-input"
+        />
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">{{= d.password}}</label>
+      <div class="layui-input-block">
+        <input
+          type="password"
+          name="password"
+          required
+          lay-affix="eye"
+          lay-verify="required|registerStrongPassword"
+          lay-reqtext="{{= d.passwordCannotBeEmpty}}"
+          placeholder="{{= d.enterPassword}}"
+          class="layui-input"
+        />
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <label class="layui-form-label">{{= d.confirmPassword}}</label>
+      <div class="layui-input-block">
+        <input
+          type="password"
+          name="confirmPassword"
+          required
+          lay-affix="eye"
+          lay-verify="required|confirmPassword"
+          lay-reqtext="{{= d.confirmPasswordCannotBeEmpty}}"
+          placeholder="{{= d.enterConfirmPassword}}"
+          class="layui-input"
+        />
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button class="layui-btn" lay-submit lay-filter="register">
+          {{= d.register}}
+        </button>
+        <button
+          type="button"
+          class="layui-btn layui-btn-primary"
+          id="faceAuthBtn"
+          lay-filter="faceAuthBtn"
+        >
+          {{= d.registerFace}}
+        </button>
+      </div>
+    </div>
+
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <a href="login.html" class="layui-link">{{= d.alreadyHaveAccount}}</a>
+      </div>
+    </div>
+  </form>
+  <div class="layui-text">
+    <button id="jaBtn">日本語</button>
+    <button id="enBtn">English</button>
+  </div>
+</div>

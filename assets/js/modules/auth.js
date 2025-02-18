@@ -12,6 +12,14 @@ layui.define((exports) => {
       this.loadFaceApi();
     },
 
+    async getTranslation() {
+      return await $.ajax({
+        url: '../../../data/translationDB.json',
+        method: 'GET',
+        dataType: 'json',
+      });
+    },
+
     getLang() {
       $.ajax({
         url: `${this.baseUrl}/lang`,
@@ -31,9 +39,15 @@ layui.define((exports) => {
         // Wait for faceapi to be available
         await this.waitForFaceApi();
         const MODEL_URL =
-          'https://cdn.jsdelivr.net/gh/cgarciagl/face-api.js/weights';
+          'https://cdn.jsdelivr.net/gh/cgarciagl/face-api.js/weights/';
+        // const MODEL_PATH = '../../../face-api.js/weights';
         console.log('Loading models...');
         // Load required models
+        // await Promise.all([
+        //   faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_PATH),
+        //   faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_PATH),
+        //   faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_PATH),
+        // ]);
         await Promise.all([
           faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
           faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
@@ -70,80 +84,74 @@ layui.define((exports) => {
       });
     },
 
-    bindEvents() {
+    async bindEvents() {
+      const translation = await this.getTranslation();
+
       form.verify({
         loginStrongPassword: [
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-          'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character',
+          translation.passwordMustBeAtLeastCharactersLong[
+            localStorageCustom('lang').lang
+          ],
         ],
         registerStrongPassword: [
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-          'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character',
+          translation.passwordMustBeAtLeastCharactersLong[
+            localStorageCustom('lang').lang
+          ],
         ],
         confirmPassword(value) {
           const { password } = form.val('registerForm');
           if (value !== password) {
-            return 'Passwords do not match';
+            return translation.passwordsDoNotMatch[
+              localStorageCustom('lang').lang
+            ];
           }
         },
       });
 
-      form.on('submit(login)', function (data) {
+      form.on('submit(login)', (data) => {
         auth.login(data.field);
         return false;
       });
 
-      form.on('submit(register)', function (data) {
+      form.on('submit(register)', (data) => {
         auth.register(data.field);
         return false;
       });
 
-      $('#jaBtn').on('click', function () {
-        localStorageCustom('lang', {
-          key: 'lang',
-          value: 'ja',
-        });
-      });
+      $('#faceAuthBtn').on('click', () => {
+        $.ajax({
+          url: '../../../pages/templates/face-auth-container.html',
+          method: 'GET',
+          dataType: 'html',
+          success: (result) => {
+            console.log(result);
 
-      $('#enBtn').on('click', function () {
-        localStorageCustom('lang', {
-          key: 'lang',
-          value: 'en',
-        });
-      });
-
-      $('#faceAuthBtn').on('click', function () {
-        layer.open({
-          title: 'Face Authentication',
-          type: 1,
-          content: `
-            <div class="face-auth-container">
-              <div
-                class="face-auth-container"
-                id="faceAuthContainer"
-                lay-filter="faceAuthContainer"
-                style="display: none"
-              >
-                <video id="video" width="640" height="480" autoplay></video>
-              </div>
-            </div>
-          `,
-          area: ['680px', '550px'], // Set fixed dimensions slightly larger than video
-          offset: 'auto', // Center the layer - without this and area, layer.open uses default positioning
-          shade: 0.8,
-          shadeClose: true,
-          move: false,
-          resize: false,
-          // maxmin: true,
-          cancel: function () {
-            const [video] = $('#video');
-            if (video && video.srcObject) {
-              const tracks = video.srcObject.getTracks();
-              tracks.forEach((track) => track.stop());
-            }
+            layer.open({
+              title: 'Face Authentication',
+              type: 1,
+              content: result,
+              area: ['680px', '550px'], // Set fixed dimensions slightly larger than video
+              offset: 'auto', // Center the layer - without this and area, layer.open uses default positioning
+              shade: 0.8,
+              shadeClose: true,
+              move: false,
+              resize: false,
+              // maxmin: true,
+              cancel: () => {
+                const [video] = $('#video');
+                if (video?.srcObject) {
+                  const tracks = video.srcObject.getTracks();
+                  for (const track of tracks) {
+                    track.stop();
+                  }
+                }
+              },
+            });
+            auth.startFaceAuth();
           },
         });
-        auth.startFaceAuth();
       });
     },
 
@@ -205,7 +213,9 @@ layui.define((exports) => {
       }
 
       const faceAuthContainer = $('#faceAuthContainer');
-      const video = document.getElementById('video');
+      const [video] = $('#video');
+
+      console.log(video);
 
       try {
         const stream = await navigator.mediaDevices.getUserMedia({
@@ -218,14 +228,15 @@ layui.define((exports) => {
           try {
             const canvas = faceapi.createCanvasFromMedia(video);
             canvas.style.position = 'absolute';
-            canvas.style.top = video.offsetTop + 'px';
-            canvas.style.left = video.offsetLeft + 'px';
+            canvas.style.top = `${video.offsetTop}px`;
+            canvas.style.left = `${video.offsetLeft}px`;
             faceAuthContainer.append(canvas);
 
             const displaySize = { width: video.width, height: video.height };
             faceapi.matchDimensions(canvas, displaySize);
 
             // const verifyFace = this.verifyFace.bind(this);
+            // biome-ignore lint/style/useConst: <explanation>
             let faceDetected = false;
 
             const interval = setInterval(async () => {

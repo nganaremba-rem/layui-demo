@@ -1,0 +1,86 @@
+{
+  "login": {
+    "en": "Login",
+    "ja": "ログイン"
+  },
+  "register": {
+    "en": "Register",
+    "ja": "登録"
+  },
+  "loginWithFace": {
+    "en": "Login with Face",
+    "ja": "顔認証でログイン"
+  },
+  "dontHaveAccount": {
+    "en": "Don't have an account? Register",
+    "ja": "アカウントがない場合は登録してください"
+  },
+  "username": {
+    "en": "Username",
+    "ja": "ユーザー名"
+  },
+  "password": {
+    "en": "Password",
+    "ja": "パスワード"
+  },
+  "enterUsername": {
+    "en": "Enter username",
+    "ja": "ユーザー名を入力してください"
+  },
+  "enterPassword": {
+    "en": "Enter password",
+    "ja": "パスワードを入力してください"
+  },
+  "usernameCannotBeEmpty": {
+    "en": "Username cannot be empty",
+    "ja": "ユーザー名を入力してください"
+  },
+  "passwordCannotBeEmpty": {
+    "en": "Password cannot be empty",
+    "ja": "パスワードを入力してください"
+  },
+  "japanese": {
+    "en": "Japanese",
+    "ja": "日本語"
+  },
+  "passwordMustBeAtLeastCharactersLong": {
+    "en": "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character",
+    "ja": "パスワードは8文字以上で入力してください。大文字、小文字、数字、特殊文字をそれぞれ1つ以上含めてください。"
+  },
+  "passwordsDoNotMatch": {
+    "en": "Passwords do not match",
+    "ja": "パスワードが一致しません"
+  },
+  "email": {
+    "en": "Email",
+    "ja": "メールアドレス"
+  },
+  "enterEmail": {
+    "en": "Enter email",
+    "ja": "メールアドレスを入力してください"
+  },
+  "emailCannotBeEmpty": {
+    "en": "Email cannot be empty",
+    "ja": "メールアドレスを入力してください"
+  },
+  "confirmPassword": {
+    "en": "Confirm password",
+    "ja": "パスワードを確認してください"
+  },
+  "enterConfirmPassword": {
+    "en": "Enter confirm password",
+    "ja": "パスワードを確認してください"
+  },
+  "confirmPasswordCannotBeEmpty": {
+    "en": "Confirm password cannot be empty",
+    "ja": "パスワードを確認してください"
+  },
+  "registerFace": {
+    "en": "Register with Face",
+    "ja": "顔認証で登録"
+  },
+  "alreadyHaveAccount": {
+    "en": "Already have an account? Login",
+    "ja": "アカウントがある場合はログインしてください"
+  }
+}
