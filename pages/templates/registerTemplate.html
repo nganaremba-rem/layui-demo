@@ -1,39 +1,39 @@
 <div class="auth-container layui-text">
-  <h2 class="auth-title">{{= d.register}}</h2>
+  <h2 class="auth-title">{{= d.translations.register}}</h2>
 
   <form method="POST" class="layui-form" lay-filter="registerForm">
     <div class="layui-form-item">
-      <label class="layui-form-label">{{= d.username}}</label>
+      <label class="layui-form-label">{{= d.translations.username}}</label>
       <div class="layui-input-block">
         <input
           type="text"
           name="username"
           required
           lay-verify="required"
-          lay-reqtext="{{= d.usernameCannotBeEmpty}}"
-          placeholder="{{= d.enterUsername}}"
+          lay-reqtext="{{= d.translations.usernameCannotBeEmpty}}"
+          placeholder="{{= d.translations.enterUsername}}"
           class="layui-input"
         />
       </div>
     </div>
 
     <div class="layui-form-item">
-      <label class="layui-form-label">{{= d.email}}</label>
+      <label class="layui-form-label">{{= d.translations.email}}</label>
       <div class="layui-input-block">
         <input
           type="email"
           name="email"
           required
           lay-verify="required|email"
-          lay-reqtext="{{= d.emailCannotBeEmpty}}"
-          placeholder="{{= d.enterEmail}}"
+          lay-reqtext="{{= d.translations.emailCannotBeEmpty}}"
+          placeholder="{{= d.translations.enterEmail}}"
           class="layui-input"
         />
       </div>
     </div>
 
     <div class="layui-form-item">
-      <label class="layui-form-label">{{= d.password}}</label>
+      <label class="layui-form-label">{{= d.translations.password}}</label>
       <div class="layui-input-block">
         <input
           type="password"
@@ -41,15 +41,17 @@
           required
           lay-affix="eye"
           lay-verify="required|registerStrongPassword"
-          lay-reqtext="{{= d.passwordCannotBeEmpty}}"
-          placeholder="{{= d.enterPassword}}"
+          lay-reqtext="{{= d.translations.passwordCannotBeEmpty}}"
+          placeholder="{{= d.translations.enterPassword}}"
           class="layui-input"
         />
       </div>
     </div>
 
     <div class="layui-form-item">
-      <label class="layui-form-label">{{= d.confirmPassword}}</label>
+      <label class="layui-form-label"
+        >{{= d.translations.confirmPassword}}</label
+      >
       <div class="layui-input-block">
         <input
           type="password"
@@ -57,8 +59,8 @@
           required
           lay-affix="eye"
           lay-verify="required|confirmPassword"
-          lay-reqtext="{{= d.confirmPasswordCannotBeEmpty}}"
-          placeholder="{{= d.enterConfirmPassword}}"
+          lay-reqtext="{{= d.translations.confirmPasswordCannotBeEmpty}}"
+          placeholder="{{= d.translations.enterConfirmPassword}}"
           class="layui-input"
         />
       </div>
@@ -67,27 +69,59 @@
     <div class="layui-form-item">
       <div class="layui-input-block">
         <button class="layui-btn" lay-submit lay-filter="register">
-          {{= d.register}}
+          {{= d.translations.register}}
         </button>
         <button
           type="button"
           class="layui-btn layui-btn-primary"
-          id="faceAuthBtn"
+          onclick="
+            layui.use(() => {
+              const { auth } = layui;
+              auth.loadFaceAuthContainer();
+            });
+          "
           lay-filter="faceAuthBtn"
         >
-          {{= d.registerFace}}
+          {{= d.translations.registerFace}}
         </button>
       </div>
     </div>
 
     <div class="layui-form-item">
       <div class="layui-input-block">
-        <a href="login.html" class="layui-link">{{= d.alreadyHaveAccount}}</a>
+        <a href="login.html" class="layui-link"
+          >{{= d.translations.alreadyHaveAccount}}</a
+        >
       </div>
     </div>
   </form>
   <div class="layui-text">
-    <button id="jaBtn">日本語</button>
-    <button id="enBtn">English</button>
+    <button
+      id="jaBtnRegister"
+      onclick="
+    layui.use(() => {
+      const { translationModule, auth } = layui;
+      translationModule.changeLanguage('ja', function(){
+        auth.init();
+      });
+    })
+    "
+    >
+      日本語
+    </button>
+
+    <button
+      id="enBtnRegister"
+      onclick="
+    layui.use(() => {
+      const { translationModule, auth } = layui;
+      translationModule.changeLanguage('en', function(){
+        auth.init();
+      });
+    })
+    "
+    >
+      English
+    </button>
   </div>
 </div>

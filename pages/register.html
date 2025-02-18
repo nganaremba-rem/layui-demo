@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Register</title>
+    <title>Login</title>
     <!-- LAYUI IMPORTS -->
     <!-- CSS -->
     <link rel="stylesheet" href="../layui/css/layui.css" />
@@ -20,23 +20,29 @@
     <!-- NOTE: defer is just the same as putting the script at the bottom of the body,
      since deferred scripts execute in order after the 
      DOM (Document Object Model or the HTML structure) is fully loaded -->
+    <!-- ----------------------------------- -->
     <script
       type="module"
-      src="../assets/js/modules/templateManager.js"
+      src="../assets/js/modules/translation.js"
       defer
     ></script>
     <script
       type="module"
-      src="../assets/js/modules/translation.js"
+      src="../assets/js/modules/templateManager.js"
       defer
     ></script>
     <script type="module" src="../assets/js/modules/auth.js" defer></script>
 
     <!-- APP -->
     <script type="module" src="../assets/js/app.js" defer></script>
-  </head>
 
+    <script
+      type="module"
+      src="../assets/js/page-scripts/registerPageScript.js"
+      defer
+    ></script>
+  </head>
   <body>
-    <main id="root"></main>
+    <main id="Register"></main>
   </body>
 </html>

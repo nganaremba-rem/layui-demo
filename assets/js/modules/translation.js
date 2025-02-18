@@ -1,21 +1,21 @@
 layui.define((exports) => {
-  const { data, $, auth, element, templateManager } = layui;
-
-  let lang;
-  if (data('lang').lang) {
-    lang = data('lang');
-  } else {
-    // set default language to japanese
-    data('lang', {
-      key: 'lang',
-      value: 'ja',
-    });
-
-    lang = data('lang');
-  }
+  const { data, $ } = layui;
 
   const translationModule = {
-    translatedData: {},
+    async init() {
+      this.setDefaultLanguage();
+      await this.updateTranslation();
+    },
+
+    setDefaultLanguage() {
+      if (!data('lang').lang) {
+        // set default language to japanese
+        data('lang', {
+          key: 'lang',
+          value: 'ja',
+        });
+      }
+    },
 
     async getTranslation() {
       return await $.ajax({
@@ -34,45 +34,18 @@ layui.define((exports) => {
       });
     },
 
-    async init() {
-      await this.updateTranslation();
-      this.render();
-    },
-
-    bindEvents() {
-      $('#jaBtn').on('click', () => {
-        data('lang', {
-          key: 'lang',
-          value: 'ja',
-        });
-        this.render();
-      });
-
-      $('#enBtn').on('click', () => {
-        data('lang', {
-          key: 'lang',
-          value: 'en',
-        });
-        this.render();
-      });
-    },
-
-    async render() {
+    async changeLanguage(lang) {
       await this.updateTranslation();
 
-      const lang = data('lang');
+      if (lang === data('lang').lang) {
+        return;
+      }
 
-      this.translatedData = Object.entries(
-        data('translations').translations
-      ).reduce((acc, [key, value]) => {
-        acc[key] = value[lang.lang];
-        return acc;
-      }, {});
-
-      await templateManager.loadTemplates(this.translatedData);
-      this.bindEvents();
-      auth.init();
-      element.render();
+      data('lang', {
+        key: 'lang',
+        value: lang,
+      });
+      window.location.reload();
     },
   };
 

@@ -1,6 +1,4 @@
-layui.use(['auth', 'translationModule'], () => {
-  const { auth, translationModule } = layui;
-  // templateManager.init();
+layui.use(() => {
+  const { translationModule } = layui;
   translationModule.init();
-  auth.init();
 });

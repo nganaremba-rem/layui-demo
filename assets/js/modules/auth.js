@@ -8,7 +8,6 @@ layui.define((exports) => {
 
     init() {
       this.bindEvents();
-      this.getLang();
       this.loadFaceApi();
     },
 
@@ -20,19 +19,6 @@ layui.define((exports) => {
       });
     },
 
-    getLang() {
-      $.ajax({
-        url: `${this.baseUrl}/lang`,
-        method: 'GET',
-        dataType: 'json',
-        success: (result) => {
-          layui.data('lang', result.lang);
-        },
-        error: (error) => {
-          console.log(error);
-        },
-      });
-    },
     async loadFaceApi() {
       try {
         console.log('Loading face-api...');
@@ -84,6 +70,37 @@ layui.define((exports) => {
       });
     },
 
+    async loadFaceAuthContainer() {
+      const result = await $.ajax({
+        url: '../../../pages/templates/face-auth-container.html',
+        method: 'GET',
+        dataType: 'html',
+      });
+
+      layer.open({
+        title: 'Face Authentication',
+        type: 1,
+        content: result,
+        area: ['680px', '550px'], // Set fixed dimensions slightly larger than video
+        offset: 'auto', // Center the layer - without this and area, layer.open uses default positioning
+        shade: 0.8,
+        shadeClose: true,
+        move: false,
+        resize: false,
+        // maxmin: true,
+        cancel: () => {
+          const [video] = $('#video');
+          if (video?.srcObject) {
+            const tracks = video.srcObject.getTracks();
+            for (const track of tracks) {
+              track.stop();
+            }
+          }
+        },
+      });
+      auth.startFaceAuth();
+    },
+
     async bindEvents() {
       const translation = await this.getTranslation();
 
@@ -118,40 +135,6 @@ layui.define((exports) => {
       form.on('submit(register)', (data) => {
         auth.register(data.field);
         return false;
-      });
-
-      $('#faceAuthBtn').on('click', () => {
-        $.ajax({
-          url: '../../../pages/templates/face-auth-container.html',
-          method: 'GET',
-          dataType: 'html',
-          success: (result) => {
-            console.log(result);
-
-            layer.open({
-              title: 'Face Authentication',
-              type: 1,
-              content: result,
-              area: ['680px', '550px'], // Set fixed dimensions slightly larger than video
-              offset: 'auto', // Center the layer - without this and area, layer.open uses default positioning
-              shade: 0.8,
-              shadeClose: true,
-              move: false,
-              resize: false,
-              // maxmin: true,
-              cancel: () => {
-                const [video] = $('#video');
-                if (video?.srcObject) {
-                  const tracks = video.srcObject.getTracks();
-                  for (const track of tracks) {
-                    track.stop();
-                  }
-                }
-              },
-            });
-            auth.startFaceAuth();
-          },
-        });
       });
     },
 

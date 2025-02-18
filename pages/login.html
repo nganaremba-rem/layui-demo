@@ -20,18 +20,30 @@
     <!-- NOTE: defer is just the same as putting the script at the bottom of the body,
      since deferred scripts execute in order after the 
      DOM (Document Object Model or the HTML structure) is fully loaded -->
-  </head>
-  <body>
-    <main id="root"></main>
-
+    <!-- ----------------------------------- -->
+    <script
+      type="module"
+      src="../assets/js/modules/translation.js"
+      defer
+    ></script>
     <script
       type="module"
       src="../assets/js/modules/templateManager.js"
+      defer
     ></script>
-    <script type="module" src="../assets/js/modules/auth.js"></script>
-    <script type="module" src="../assets/js/modules/translation.js"></script>
+    <script type="module" src="../assets/js/modules/auth.js" defer></script>
 
     <!-- APP -->
-    <script type="module" src="../assets/js/app.js"></script>
+    <script type="module" src="../assets/js/app.js" defer></script>
+
+    <script
+      type="module"
+      src="../assets/js/page-scripts/loginPageScript.js"
+      defer
+    ></script>
+  </head>
+  <body>
+    <main id="Login"></main>
+    <main id="Register"></main>
   </body>
 </html>

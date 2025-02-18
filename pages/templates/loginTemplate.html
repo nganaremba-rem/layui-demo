@@ -1,34 +1,34 @@
 <!-- <template id="translationTemplate"> -->
 <div class="bg-blue auth-container layui-text">
-  <h2 class="layui-font-32 auth-title">{{= d.login}}</h2>
+  <h2 class="layui-font-32 auth-title">{{= d.translations.login}}</h2>
 
   <form method="POST" class="layui-form" lay-filter="loginForm">
     <div class="layui-form-item">
-      <label class="layui-form-label">{{= d.username}}</label>
+      <label class="layui-form-label">{{= d.translations.username}}</label>
       <div class="layui-input-block">
         <input
           type="text"
           name="username"
           required
           lay-verify="required"
-          lay-reqtext="{{= d.usernameCannotBeEmpty}}"
-          placeholder="{{= d.enterUsername}}"
+          lay-reqtext="{{= d.translations.usernameCannotBeEmpty}}"
+          placeholder="{{= d.translations.enterUsername}}"
           class="layui-input"
         />
       </div>
     </div>
 
     <div class="layui-form-item">
-      <label class="layui-form-label">{{= d.password}}</label>
+      <label class="layui-form-label">{{= d.translations.password}}</label>
       <div class="layui-input-block">
         <input
           type="password"
           name="password"
           required
           lay-affix="eye"
-          lay-reqtext="{{= d.passwordCannotBeEmpty}}"
+          lay-reqtext="{{= d.translations.passwordCannotBeEmpty}}"
           lay-verify="required|loginStrongPassword"
-          placeholder="{{= d.enterPassword}}"
+          placeholder="{{= d.translations.enterPassword}}"
           class="layui-input"
         />
       </div>
@@ -43,29 +43,60 @@
           lay-filter="login"
           lay-loading
         >
-          {{= d.login}}
+          {{= d.translations.login}}
         </button>
         <button
           type="button"
           class="layui-btn layui-btn-primary"
-          id="faceAuthBtn"
           lay-filter="faceAuthBtn"
+          onclick="
+            layui.use(() => {
+              const { auth } = layui;
+              auth.loadFaceAuthContainer();
+            });
+          "
         >
-          {{= d.loginWithFace}}
+          {{= d.translations.loginWithFace}}
         </button>
       </div>
     </div>
 
     <div class="layui-form-item">
       <div class="layui-input-block">
-        <a href="register.html" class="layui-link">{{= d.dontHaveAccount}}</a>
+        <a href="register.html" class="layui-link"
+          >{{= d.translations.dontHaveAccount}}</a
+        >
       </div>
     </div>
   </form>
 
   <div class="layui-text">
-    <button id="jaBtn">日本語</button>
-    <button id="enBtn">English</button>
+    <button
+      id="jaBtnLogin"
+      onclick="
+    layui.use(() => {
+      const { translationModule, auth } = layui;
+      translationModule.changeLanguage('ja', function(){
+        auth.init();
+      });
+    })  
+    "
+    >
+      日本語
+    </button>
+    <button
+      id="enBtnLogin"
+      onclick="
+    layui.use(() => {
+      const { translationModule, auth } = layui;
+      translationModule.changeLanguage('en', function(){
+        auth.init();
+      });
+    })
+    "
+    >
+      English
+    </button>
   </div>
 </div>
 <!-- </template> -->

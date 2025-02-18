@@ -3,27 +3,41 @@
 // It will be used to load the templates and render them
 
 layui.define((exports) => {
-  const { laytpl, $ } = layui;
+  const { laytpl, $, data } = layui;
 
   const templateManager = {
-    loadTemplates(templateData = [], templatePath = null) {
+    loadTemplates(
+      templateData = [],
+      templatePath = null,
+      idToRender = '#root'
+    ) {
       return new Promise((resolve, reject) => {
-        let templateUrl = templatePath;
+        const translations = Object.entries(
+          data('translations').translations
+        ).reduce((acc, [key, value]) => {
+          acc[key] = value[data('lang').lang];
+          return acc;
+        }, {});
 
-        if (!templateUrl) {
-          // Get current URL path
-          const currentPath = layui.url().pathname.pop().replace('.html', '');
-          templateUrl = `/pages/templates/${currentPath}Template.html`;
+        // append the language data to the template data
+        const dataToRender = {
+          data: templateData,
+          translations,
+        };
+        console.log('dataToRender', dataToRender);
+
+        if (!templatePath) {
+          return reject(new Error('Template path is required'));
         }
 
         $.ajax({
-          url: templateUrl,
+          url: templatePath,
           method: 'GET',
           dataType: 'html',
           success: (htmlFromGetRequest) => {
             // Render the template
-            laytpl(htmlFromGetRequest).render(templateData, (html) => {
-              $('#root').html(html);
+            laytpl(htmlFromGetRequest).render(dataToRender, (html) => {
+              $(idToRender).html(html);
             });
             resolve();
           },
