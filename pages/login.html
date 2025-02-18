@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <script type="module" src="../assets/js/main.js"></script>
+    <!-- <link rel="stylesheet" href="../node_modules/layui/dist/css/layui.css" /> -->
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <script src="../node_modules/face-api.js/dist/face-api.js"></script>
+    <script type="module" src="../assets/js/modules/auth.js"></script>
+    <script type="module" src="../assets/js/app.js"></script>
+    <!-- <script src="assets/js/modules/router.js" defer></script> -->
+  </head>
+  <body>
+    <div class="bg-blue auth-container layui-text">
+      <h2 class="layui-font-32 auth-title">Login</h2>
+
+      <form method="POST" class="layui-form" lay-filter="loginForm">
+        <div class="layui-form-item">
+          <label class="layui-form-label">Username</label>
+          <div class="layui-input-block">
+            <input
+              type="text"
+              name="username"
+              required
+              lay-verify="required"
+              lay-reqtext="Username cannot be empty"
+              placeholder="Enter username"
+              class="layui-input"
+            />
+          </div>
+        </div>
+
+        <div class="layui-form-item">
+          <label class="layui-form-label">Password</label>
+          <div class="layui-input-block">
+            <input
+              type="password"
+              name="password"
+              required
+              lay-affix="eye"
+              lay-reqtext="Password cannot be empty"
+              lay-verify="required|loginStrongPassword"
+              placeholder="Enter password"
+              class="layui-input"
+              title="Password must be at least 6 characters long"
+            />
+          </div>
+        </div>
+
+        <div class="layui-form-item">
+          <div class="layui-input-block">
+            <button
+              type="submit"
+              class="layui-btn"
+              lay-submit
+              lay-filter="login"
+              lay-loading
+            >
+              Login
+            </button>
+            <button
+              type="button"
+              class="layui-btn layui-btn-primary"
+              id="faceAuthBtn"
+              lay-filter="faceAuthBtn"
+            >
+              Login with Face
+            </button>
+          </div>
+        </div>
+
+        <div class="layui-form-item">
+          <div class="layui-input-block">
+            <a href="register.html" class="layui-link"
+              >Don't have an account? Register</a
+            >
+          </div>
+        </div>
+      </form>
+
+      <div>
+        <button id="jaBtn">Japanese</button>
+        <button id="enBtn">English</button>
+      </div>
+    </div>
+  </body>
+</html>

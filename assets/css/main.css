@@ -1,0 +1,23 @@
+.auth-container {
+  max-width: 400px;
+  margin: 50px auto;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.face-auth-container {
+  width: 640px;
+  text-align: center;
+  margin: auto;
+}
+
+#video {
+  border: 3px solid #009688;
+  border-radius: 8px;
+}
+
+.auth-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
